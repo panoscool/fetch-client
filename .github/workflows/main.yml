@@ -6,9 +6,14 @@ on:
 
 jobs:
   build-lint:
-    name: Lint, Test, and Build
+    name: Lint, Test, and Build (Node ${{ matrix.node-version }})
     timeout-minutes: 15
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 24]
 
     steps:
       - name: Check out code
@@ -17,7 +22,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: ${{ matrix.node-version }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
