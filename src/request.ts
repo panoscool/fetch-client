@@ -6,7 +6,7 @@ import type {
 	ApiRequestOptions,
 	BodyInput,
 	HeadersInput,
-} from "./types.js";
+} from "./types";
 
 type PreparedBody = {
 	body?: BodyInput;
@@ -36,7 +36,7 @@ const mergeHeaders = (
 // Matches "https://…" and protocol-relative "//…" (mirrors axios's isAbsoluteURL).
 const ABSOLUTE_URL = /^([a-z][a-z\d+\-.]*?:)?\/\//i;
 
-const joinUrl = (baseUrl: string, path: string) => {
+export const joinUrl = (baseUrl: string, path: string) => {
 	// An absolute path overrides baseUrl, so callers can target another host.
 	if (ABSOLUTE_URL.test(path)) return path;
 	if (!baseUrl) return path;
@@ -96,7 +96,7 @@ const createRequestConfig = (
 	body: preparedBody.body,
 });
 
-const createRequestDraft = <TBody>(
+export const createRequestDraft = <TBody>(
 	path: string,
 	baseUrl: string,
 	method: ApiMethod,
@@ -108,7 +108,7 @@ const createRequestDraft = <TBody>(
 	method,
 });
 
-const createErrorRequestConfig = (
+export const createErrorRequestConfig = (
 	request: ApiRequestDraft,
 ): ApiRequestConfig => {
 	const body = isBodyInit(request.body) ? request.body : undefined;
@@ -119,7 +119,7 @@ const createErrorRequestConfig = (
 	};
 };
 
-const finalizeRequest = async (
+export const finalizeRequest = async (
 	request: ApiRequestDraft,
 	clientHeaders: ApiHeadersResolver | undefined,
 ): Promise<ApiRequestConfig> => {
@@ -137,11 +137,4 @@ const finalizeRequest = async (
 	applyContentType(headers, preparedBody.contentType);
 
 	return createRequestConfig(request, headers, preparedBody);
-};
-
-export {
-	createErrorRequestConfig,
-	createRequestDraft,
-	finalizeRequest,
-	joinUrl,
 };

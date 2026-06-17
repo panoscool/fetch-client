@@ -2,8 +2,8 @@ import type {
 	ApiInterceptorManager,
 	ApiRequestConfig,
 	ApiResponse,
-} from "./types.js";
-import { ApiError } from "./types.js";
+} from "./types";
+import { ApiError } from "./types";
 
 const getNonEmptyString = (value: unknown) => {
 	return typeof value === "string" && value.trim() ? value : undefined;
@@ -51,7 +51,7 @@ function resolveErrorMessage(input: unknown, fallback: string): string {
 	return fallback;
 }
 
-const normalizeApiError = ({
+export const normalizeApiError = ({
 	error,
 	fallbackMessage,
 	request,
@@ -82,7 +82,7 @@ const normalizeApiError = ({
 	});
 };
 
-const runResponseErrorInterceptors = async (
+export const runResponseErrorInterceptors = async (
 	interceptors: ApiInterceptorManager<ApiResponse> & {
 		runRejected: (error: unknown) => Promise<ApiResponse>;
 	},
@@ -106,5 +106,3 @@ const runResponseErrorInterceptors = async (
 		});
 	}
 };
-
-export { normalizeApiError, runResponseErrorInterceptors };

@@ -1,21 +1,21 @@
-import { runResponseErrorInterceptors } from "./errors.js";
-import { createInterceptorManager } from "./interceptors.js";
+import { runResponseErrorInterceptors } from "./errors";
+import { createInterceptorManager } from "./interceptors";
 import {
 	createErrorRequestConfig,
 	createRequestDraft,
 	finalizeRequest,
 	joinUrl,
-} from "./request.js";
-import { createFetchTransport } from "./transport.js";
+} from "./request";
+import { createFetchTransport } from "./transport";
 import type {
 	ApiClient,
 	ApiClientConfig,
 	ApiRequestDraft,
 	ApiRequestOptions,
 	ApiResponse,
-} from "./types.js";
+} from "./types";
 
-const createApiClient = ({
+export const createApiClient = ({
 	baseUrl = "",
 	headers: clientHeaders,
 	transport = createFetchTransport(),
@@ -72,5 +72,3 @@ const createApiClient = ({
 		},
 	};
 };
-
-export { createApiClient };
