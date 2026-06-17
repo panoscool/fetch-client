@@ -1,18 +1,9 @@
-export { createApiClient } from "./api.js";
-export { createFetchTransport } from "./transport.js";
-export type {
-	ApiClient,
-	ApiClientConfig,
-	ApiHeadersResolver,
-	ApiInterceptor,
-	ApiInterceptorManager,
-	ApiMethod,
-	ApiRequestConfig,
-	ApiRequestDraft,
-	ApiRequestOptions,
-	ApiResponse,
-	ApiResponseType,
-	ApiTransport,
-	MaybePromise,
-} from "./types.js";
-export { ApiError } from "./types.js";
+export * from "./api";
+export * from "./transport";
+export * from "./types";
+
+import { createApiClient } from "./api";
+import { createFetchTransport } from "./transport";
+import { ApiError } from "./types";
+
+export default { ApiError, createApiClient, createFetchTransport };

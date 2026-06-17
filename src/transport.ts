@@ -1,8 +1,8 @@
-import { normalizeApiError } from "./errors.js";
-import { parseResponse } from "./response.js";
-import type { ApiRequestConfig, ApiTransport } from "./types.js";
+import { normalizeApiError } from "./errors";
+import { parseResponse } from "./response";
+import type { ApiRequestConfig, ApiTransport } from "./types";
 
-const createFetchTransport = (
+export const createFetchTransport = (
 	fetchImpl: typeof fetch = fetch,
 ): ApiTransport => {
 	return async <TResponse>(request: ApiRequestConfig) => {
@@ -52,5 +52,3 @@ const createFetchTransport = (
 		};
 	};
 };
-
-export { createFetchTransport };

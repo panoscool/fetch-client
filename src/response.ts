@@ -1,6 +1,6 @@
-import type { ApiResponseType } from "./types.js";
+import type { ApiResponseType } from "./types";
 
-const parseResponse = async (
+export const parseResponse = async (
 	response: Response,
 	responseType: ApiResponseType = "auto",
 ) => {
@@ -32,5 +32,3 @@ const parseResponse = async (
 
 	return response.text();
 };
-
-export { parseResponse };

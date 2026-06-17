@@ -1,6 +1,6 @@
-type MaybePromise<T> = Promise<T> | T;
-type ApiMethod = "DELETE" | "GET" | "PATCH" | "POST" | "PUT";
-type ApiResponseType =
+export type MaybePromise<T> = Promise<T> | T;
+export type ApiMethod = "DELETE" | "GET" | "PATCH" | "POST" | "PUT";
+export type ApiResponseType =
 	| "arrayBuffer"
 	| "auto"
 	| "blob"
@@ -11,8 +11,11 @@ type ApiResponseType =
 
 // Self-contained equivalents of the DOM-only `HeadersInit`/`BodyInit` aliases,
 // so consumers need only fetch's globals (provided by @types/node) — not the DOM lib.
-type HeadersInput = Headers | Record<string, string> | Array<[string, string]>;
-type BodyInput =
+export type HeadersInput =
+	| Headers
+	| Record<string, string>
+	| Array<[string, string]>;
+export type BodyInput =
 	| string
 	| Blob
 	| FormData
@@ -20,7 +23,7 @@ type BodyInput =
 	| ArrayBuffer
 	| ArrayBufferView<ArrayBuffer>;
 
-type ApiRequestOptions<TBody = unknown> = Omit<
+export type ApiRequestOptions<TBody = unknown> = Omit<
 	RequestInit,
 	"body" | "headers" | "method"
 > & {
@@ -30,7 +33,7 @@ type ApiRequestOptions<TBody = unknown> = Omit<
 	responseType?: ApiResponseType;
 };
 
-type ApiRequestDraft<TBody = unknown> = Omit<
+export type ApiRequestDraft<TBody = unknown> = Omit<
 	ApiRequestOptions<TBody>,
 	"method"
 > & {
@@ -39,7 +42,7 @@ type ApiRequestDraft<TBody = unknown> = Omit<
 	method: ApiMethod;
 };
 
-type ApiRequestConfig = Omit<
+export type ApiRequestConfig = Omit<
 	ApiRequestOptions<BodyInput | undefined>,
 	"method"
 > & {
@@ -73,7 +76,7 @@ const redactHeaders = (
 	return result;
 };
 
-class ApiError extends Error {
+export class ApiError extends Error {
 	readonly status: number;
 	readonly data: unknown;
 	readonly request: ApiRequestConfig;
@@ -120,7 +123,7 @@ class ApiError extends Error {
 	}
 }
 
-type ApiResponse<TData = unknown> = {
+export type ApiResponse<TData = unknown> = {
 	data: TData;
 	status: number;
 	statusText: string;
@@ -129,20 +132,20 @@ type ApiResponse<TData = unknown> = {
 	response: Response;
 };
 
-type ApiHeadersResolver =
+export type ApiHeadersResolver =
 	| HeadersInput
 	| ((request: ApiRequestConfig) => MaybePromise<HeadersInput>);
 
-type ApiInterceptor<TValue> = {
+export type ApiInterceptor<TValue> = {
 	onFulfilled?: (value: TValue) => MaybePromise<TValue>;
 	onRejected?: (error: unknown) => MaybePromise<TValue>;
 };
 
-type ApiTransport = <TResponse>(
+export type ApiTransport = <TResponse>(
 	request: ApiRequestConfig,
 ) => Promise<ApiResponse<TResponse>>;
 
-type ApiInterceptorManager<TValue> = {
+export type ApiInterceptorManager<TValue> = {
 	use: (
 		onFulfilled?: (value: TValue) => MaybePromise<TValue>,
 		onRejected?: (error: unknown) => MaybePromise<TValue>,
@@ -151,7 +154,7 @@ type ApiInterceptorManager<TValue> = {
 	clear: () => void;
 };
 
-type ApiClient = {
+export type ApiClient = {
 	request: <TResponse, TBody = unknown>(
 		path: string,
 		options?: ApiRequestOptions<TBody>,
@@ -186,27 +189,8 @@ type ApiClient = {
 	};
 };
 
-type ApiClientConfig = {
+export type ApiClientConfig = {
 	baseUrl?: string;
 	headers?: ApiHeadersResolver;
 	transport?: ApiTransport;
 };
-
-export type {
-	ApiClient,
-	ApiClientConfig,
-	ApiHeadersResolver,
-	ApiInterceptor,
-	ApiInterceptorManager,
-	ApiMethod,
-	ApiRequestConfig,
-	ApiRequestDraft,
-	ApiRequestOptions,
-	ApiResponse,
-	ApiResponseType,
-	ApiTransport,
-	BodyInput,
-	HeadersInput,
-	MaybePromise,
-};
-export { ApiError };

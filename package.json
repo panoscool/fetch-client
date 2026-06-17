@@ -6,7 +6,7 @@
 	"funding": "https://github.com/sponsors/panoscool",
 	"homepage": "https://github.com/panoscool/fetch-client#readme",
 	"author": {
-		"name": "Panos Kullolli",
+		"name": "Lavdimir Kullolli",
 		"email": "lkullolli@gmail.com",
 		"url": "https://panoscool.com"
 	},
@@ -31,6 +31,7 @@
 	"scripts": {
 		"test": "bun test",
 		"build": "bun build.ts",
+		"verify": "node ./verify.mjs",
 		"prepublishOnly": "npm run build",
 		"release": "bash ./scripts/release.sh",
 		"lint": "biome check",
@@ -45,16 +46,13 @@
 	"keywords": [
 		"fetch",
 		"http",
-		"http-client",
-		"client",
 		"rest",
 		"api",
+		"client",
 		"request",
-		"axios",
 		"interceptors",
-		"typescript",
-		"esm",
-		"cjs"
+		"http-client",
+		"fetch-client"
 	],
 	"devDependencies": {
 		"@biomejs/biome": "2.3.11",
