@@ -235,6 +235,14 @@ bun test        # bun test runner
 bun run build   # ESM + CJS + type declarations into dist/
 ```
 
+### Verification
+
+```bash
+node verify.mjs
+# or
+bun verify.mjs
+```
+
 ## License
 
 MIT — see [LICENSE](LICENSE)
