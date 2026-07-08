@@ -1,6 +1,8 @@
 import type { ApiInterceptor, ApiInterceptorManager } from "./types";
 
-export const createInterceptorManager = <TValue>(): ApiInterceptorManager<TValue> & {
+export const createInterceptorManager = <
+	TValue,
+>(): ApiInterceptorManager<TValue> & {
 	run: (value: TValue) => Promise<TValue>;
 	runRejected: (error: unknown) => Promise<TValue>;
 } => {

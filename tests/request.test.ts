@@ -11,19 +11,36 @@ import type { ApiRequestDraft } from "../src/types";
 import { readBodyText } from "./helpers";
 
 test("joinUrl preserves base paths and lets absolute URLs override the base", () => {
-	assert.equal(joinUrl("https://api.example.com/v1", "/users"), "https://api.example.com/v1/users");
-	assert.equal(joinUrl("https://api.example.com/v1/", "users"), "https://api.example.com/v1/users");
-	assert.equal(joinUrl("https://api.example.com", "https://other.example.com/x"), "https://other.example.com/x");
-	assert.equal(joinUrl("https://api.example.com", "//cdn.example.com/y"), "//cdn.example.com/y");
+	assert.equal(
+		joinUrl("https://api.example.com/v1", "/users"),
+		"https://api.example.com/v1/users",
+	);
+	assert.equal(
+		joinUrl("https://api.example.com/v1/", "users"),
+		"https://api.example.com/v1/users",
+	);
+	assert.equal(
+		joinUrl("https://api.example.com", "https://other.example.com/x"),
+		"https://other.example.com/x",
+	);
+	assert.equal(
+		joinUrl("https://api.example.com", "//cdn.example.com/y"),
+		"//cdn.example.com/y",
+	);
 	assert.equal(joinUrl("", "/local"), "/local");
 });
 
 test("createRequestDraft keeps options and computes path, url, and method", () => {
-	const draft = createRequestDraft("/users", "https://api.example.com", "POST", {
-		headers: { "x-request": "yes" },
-		body: { name: "Ada" },
-		responseType: "json",
-	});
+	const draft = createRequestDraft(
+		"/users",
+		"https://api.example.com",
+		"POST",
+		{
+			headers: { "x-request": "yes" },
+			body: { name: "Ada" },
+			responseType: "json",
+		},
+	);
 
 	assert.equal(draft.path, "/users");
 	assert.equal(draft.url, "https://api.example.com/users");

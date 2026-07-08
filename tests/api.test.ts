@@ -181,7 +181,10 @@ test("createApiClient response interceptors transform, recover, eject, and clear
 				};
 			});
 
-			const transformed = await client.post<{ order: string[] }>("/ordered", {});
+			const transformed = await client.post<{ order: string[] }>(
+				"/ordered",
+				{},
+			);
 			assert.deepEqual(transformed.data.order, [
 				"response-first",
 				"response-second",
@@ -193,11 +196,17 @@ test("createApiClient response interceptors transform, recover, eject, and clear
 			]);
 
 			client.interceptors.response.eject(firstResponseInterceptor);
-			const afterEject = await client.post<{ order: string[] }>("/after-eject", {});
+			const afterEject = await client.post<{ order: string[] }>(
+				"/after-eject",
+				{},
+			);
 			assert.deepEqual(afterEject.data.order, ["response-second"]);
 
 			client.interceptors.response.clear();
-			const afterClear = await client.post<{ order: string[] }>("/after-clear", {});
+			const afterClear = await client.post<{ order: string[] }>(
+				"/after-clear",
+				{},
+			);
 			assert.deepEqual(afterClear.data.order, []);
 		},
 	);
@@ -233,9 +242,12 @@ test("createApiClient lets response error interceptors recover setup and transpo
 				}),
 			);
 
-			assert.deepEqual((await headerFailureClient.get("/header-failure")).data, {
-				recovered: "header-resolver",
-			});
+			assert.deepEqual(
+				(await headerFailureClient.get("/header-failure")).data,
+				{
+					recovered: "header-resolver",
+				},
+			);
 		},
 	);
 });

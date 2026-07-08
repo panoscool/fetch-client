@@ -52,8 +52,11 @@ test("createFetchTransport normalizes unreadable responses", async () => {
 		url: "https://api.example.com/bad-json",
 		responseType: "json",
 	});
-	const transport = createTransport(async () =>
-		new Response("not-json", { headers: { "Content-Type": "application/json" } }),
+	const transport = createTransport(
+		async () =>
+			new Response("not-json", {
+				headers: { "Content-Type": "application/json" },
+			}),
 	);
 
 	await assert.rejects(transport(request), (error: unknown) => {
@@ -67,11 +70,12 @@ test("createFetchTransport normalizes unreadable responses", async () => {
 
 test("createFetchTransport normalizes non-2xx responses with parsed data", async () => {
 	const request = createRequest({ url: "https://api.example.com/missing" });
-	const transport = createTransport(async () =>
-		new Response(JSON.stringify({ detail: "missing" }), {
-			status: 404,
-			headers: { "Content-Type": "application/json" },
-		}),
+	const transport = createTransport(
+		async () =>
+			new Response(JSON.stringify({ detail: "missing" }), {
+				status: 404,
+				headers: { "Content-Type": "application/json" },
+			}),
 	);
 
 	let caught: unknown;
